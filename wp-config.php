@@ -37,6 +37,10 @@ define( 'DB_CHARSET', 'utf8mb4' );
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
+/** Tom Dewar added 20/04/2020 : attempt to fix redirect bug */
+define('WP_HOME', 'https://hmcmweb.azurewebsites.net')
+define('WP_SITEURL', 'https://hmcmweb.azurewebsites.net')
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
