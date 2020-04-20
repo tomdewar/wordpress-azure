@@ -20,26 +20,30 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'mysqldatabase41279' );
+
+$connectstr_dbhost = getenv('DATABASE_HOST');
+$connectstr_dbname = getenv('DATABASE_NAME');
+$connectstr_dbusername = getenv('DATABASE_USERNAME');
+$connectstr_dbpassword = getenv('DATABASE_PASSWORD');
+
+
+define('DB_NAME', $connectstr_dbname);
 
 /** MySQL database username */
-define( 'DB_USER', 'mysqldbuser@hmcmweb-mysqldbserver' );
+define('DB_USER', $connectstr_dbusername);
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'oldMYhatfarm007withpurpose' );
+define('DB_PASSWORD',$connectstr_dbpassword);
 
 /** MySQL hostname */
-define( 'DB_HOST', 'hmcmweb-mysqldbserver.mysql.database.azure.com' );
+define('DB_HOST', $connectstr_dbhost);
 
 /** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8mb4' );
+define( 'DB_CHARSET', 'utf8' );
 
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
-/** Tom Dewar added 20/04/2020 : attempt to fix redirect bug */
-define('WP_HOME', 'https://hmcmweb.azurewebsites.net')
-define('WP_SITEURL', 'https://hmcmweb.azurewebsites.net')
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -84,6 +88,15 @@ $table_prefix = 'wp_';
 define( 'WP_DEBUG', false );
 
 /* That's all, stop editing! Happy publishing. */
+/**https://codex.wordpress.org/Function_Reference/is_ssl */
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+	$_SERVER['HTTPS'] = 'on';
+
+//Relative URLs for swapping across app service deployment slots 
+define('WP_HOME', 'http://'. $_SERVER['HTTP_HOST']);
+define('WP_SITEURL', 'http://'. $_SERVER['HTTP_HOST']);
+define('WP_CONTENT_URL', '/wp-content');
+define('DOMAIN_CURRENT_SITE', $_SERVER['HTTP_HOST']);
 
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
